@@ -1,10 +1,9 @@
 import { Router } from 'express';
-import { rateLimiter } from '../middlewares/rateLimiter';
-import { getStats, sendSMS } from '../controllers/smsController';
+import { sendSMS } from '../controllers/smsController';
+import rateLimiter from '../middlewares/rateLimiter';
 
 const router = Router();
 
-router.post('/send-sms', rateLimiter, sendSMS);
-router.get('/stats', getStats);
+router.post('/send', rateLimiter, sendSMS);
 
 export default router;

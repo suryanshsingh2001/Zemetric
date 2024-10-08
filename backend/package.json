@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "API Rate Limiter for SMS APIs",
-  "main": "dist/index.js",  
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",           
-    "start": "tsc && node dist/server.js", 
-    "dev": "ts-node src/server.ts",  
+    "build": "tsc",
+    "start": "tsc && node dist/app.js",
+    "dev": "ts-node src/app.ts",
     "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +16,7 @@
   "dependencies": {
     "express": "^4.21.0",
     "ioredis": "^5.4.1",
+    "moment": "^2.30.1",
     "pg": "^8.13.0",
     "redis": "^4.7.0"
   },

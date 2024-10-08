@@ -1,15 +1,27 @@
 import express from 'express';
 import smsRoutes from './routes/smsRoutes';
-
+import statsRoutes from './routes/statsRoutes';
 import { connectRedis } from './config/redis';
 
 const app = express();
+
 app.use(express.json());
 
-// Connect to Redis and Database
+
+//connect to redis
+
 connectRedis();
 
-// Mount routes
+// SMS API routes
 app.use('/api/sms', smsRoutes);
 
-export default app;
+// Stats API routes
+app.use('/api/stats', statsRoutes);
+
+const PORT = process.env.PORT || 3000;
+
+
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
