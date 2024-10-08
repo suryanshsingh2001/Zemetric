@@ -2,9 +2,13 @@ import express from 'express';
 import smsRoutes from './routes/smsRoutes';
 import statsRoutes from './routes/statsRoutes';
 import { connectRedis } from './config/redis';
+import cors from 'cors';
 
 const app = express();
 
+
+
+app.use(cors());
 app.use(express.json());
 
 
