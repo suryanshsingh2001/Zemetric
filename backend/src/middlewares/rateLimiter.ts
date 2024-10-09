@@ -1,5 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, response } from "express";
 import redis from "../config/redis";
+import logger from "../utils/Logger";
 
 const RATE_LIMIT_MINUTE = 3;
 const RATE_LIMIT_DAY = 10;
@@ -32,6 +33,16 @@ const rateLimiter = async (
         message: `Too many requests, try again in ${ttlMinute} seconds`,
       });
 
+      logger.error(`Too many requests, try again in ${ttlMinute} seconds`, {
+        response: {
+          ip,
+          phoneNumber,
+          keyMinute,
+          minuteCount,
+          ttlMinute,
+        },
+      });
+
       return;
     }
 
@@ -53,12 +64,27 @@ const rateLimiter = async (
         )} hours`,
       });
 
+      logger.error(
+        `Daily limit reached, try again in ${Math.ceil(
+          ttlDay / 60 / 60
+        )} hours`,
+        {
+          response: {
+            ip,
+            phoneNumber,
+            keyDay,
+            dayCount,
+            ttlDay,
+          },
+        }
+      );
+
       return;
     }
 
     next();
   } catch (error) {
-    console.error("Rate limiter error:", error);
+    logger.error("Rate limiter error", { error: (error as any).message });
     res.status(500).json({ error: "Internal server error" });
   }
 };

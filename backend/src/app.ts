@@ -3,6 +3,7 @@ import smsRoutes from './routes/smsRoutes';
 import statsRoutes from './routes/statsRoutes';
 import { connectRedis } from './config/redis';
 import cors from 'cors';
+import logger from './utils/Logger';
 
 const app = express();
 
@@ -27,5 +28,5 @@ const PORT = process.env.PORT || 3000;
 
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server started and listening on port ${PORT}`);
 });

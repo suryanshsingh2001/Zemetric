@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
-import redis from '../config/redis';
+import { Request, Response } from "express";
+import redis from "../config/redis";
+import logger from "../utils/Logger";
 
 export const sendSMS = async (req: Request, res: Response): Promise<void> => {
   const { phoneNumber, message } = req.body;
@@ -7,6 +8,14 @@ export const sendSMS = async (req: Request, res: Response): Promise<void> => {
 
   const keyMinute = `sms:${ip}:${phoneNumber}:minute`;
   const keyDay = `sms:${ip}:${phoneNumber}:day`;
+
+  if (!phoneNumber || !message) {
+    logger.error("Missing required fields", {
+      error: { ip, phoneNumber, message },
+    });
+    res.status(400).json({ error: "Missing required fields" });
+    return;
+  }
 
   try {
     // Increment request count for the minute
@@ -22,11 +31,22 @@ export const sendSMS = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Log SMS sent
-    console.log(`SMS sent to ${phoneNumber} from ${ip}: ${message}`);
+    // console.log(`SMS sent to ${phoneNumber} from ${ip}: ${message}`);
 
-    res.status(200).json({ message: 'SMS sent successfully!' });
+    logger.info("SMS sent successfully", {
+      response: {
+        ip,
+        phoneNumber,
+        message,
+      },
+    });
+
+    res.status(200).json({ message: "SMS sent successfully!" });
   } catch (error) {
-    console.error('Error sending SMS:', error);
-    res.status(500).json({ error: 'Failed to send SMS' });
+    // console.error("Error sending SMS:", error);
+    logger.error("Failed to send SMS", {
+      error: { ip, phoneNumber, message, error },
+    });
+    res.status(500).json({ error: "Failed to send SMS" });
   }
 };
