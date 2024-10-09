@@ -10,12 +10,10 @@ import {
   Calendar,
   AlertTriangle,
   Send,
-  User,
-  Moon,
-  Sun,
+ 
 } from "lucide-react";
 
-import CONFIG from "../../config";
+import CONFIG from "../config";
 
 import Chart from "@/components/shared/Chart";
 
@@ -35,6 +33,8 @@ const userProfile: UserProfile = {
   phoneNumber: "8299381052",
 };
 export default function Dashboard() {
+
+  console.log(CONFIG.BASE_URL, "CONFIG.BASE_URL");
   const [stats, setStats] = useState<Stats>({
     smsSentInLastMinute: 0,
     totalSmsSentToday: 0,

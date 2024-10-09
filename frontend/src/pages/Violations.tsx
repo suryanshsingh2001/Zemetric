@@ -2,7 +2,6 @@ import React from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -15,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import CONFIG from "../../config";
+import CONFIG from "../config";
 import axios from "axios";
 import { getTimeStamp } from "@/lib/utils";
 

@@ -18,6 +18,8 @@ import { FileText } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import CONFIG from "../config";
+
 interface Log {
   level: string;
   message: string;
@@ -32,7 +34,7 @@ export function LogsPage() {
 
   const fetchLogs = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/logs");
+      const response = await axios.get(`${CONFIG.BASE_URL}logs`);
       console.log("Logs:", response.data);
       setLogs(response.data);
     } catch (error) {
