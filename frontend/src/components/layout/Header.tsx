@@ -1,30 +1,20 @@
-
-import { Button } from "@/components/ui/button"
-import { Send, User, Moon, Sun } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Send, User, Moon, Sun } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { useTheme } from "../layout/theme-provider"
+} from "@/components/ui/popover";
+import { useTheme } from "../layout/theme-provider";
+import { UserProfile } from "types";
 
-interface UserProfile {
-  name: string
-  phoneNumber: string
-}
-
-interface HeaderProps {
-  userProfile: UserProfile
-}
-
-
-const userProfile : UserProfile = {
+const userProfile: UserProfile = {
   name: "John Doe",
   phoneNumber: "8299381052",
-}
+};
 
 export function Header() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
   return (
     <header className="bg-card shadow">
@@ -32,7 +22,9 @@ export function Header() {
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <Send className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">SMS Rate Limiter</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
+              SMS Rate Limiter
+            </h1>
           </div>
           <div className="flex items-center space-x-4">
             <Button
@@ -41,7 +33,11 @@ export function Header() {
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {theme === "dark" ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
             </Button>
             <Popover>
               <PopoverTrigger asChild>
@@ -53,16 +49,22 @@ export function Header() {
                 <div className="grid gap-4">
                   <div className="space-y-2">
                     <h4 className="font-medium leading-none">Profile</h4>
-                    <p className="text-sm text-muted-foreground">Your account details</p>
+                    <p className="text-sm text-muted-foreground">
+                      Your account details
+                    </p>
                   </div>
                   <div className="grid gap-2">
                     <div className="grid grid-cols-3 items-center gap-4">
                       <span className="text-sm">Name:</span>
-                      <span className="col-span-2 font-medium">{userProfile.name}</span>
+                      <span className="col-span-2 font-medium">
+                        {userProfile.name}
+                      </span>
                     </div>
                     <div className="grid grid-cols-3 items-center gap-4">
                       <span className="text-sm">Phone:</span>
-                      <span className="col-span-2 font-medium">{userProfile.phoneNumber}</span>
+                      <span className="col-span-2 font-medium">
+                        {userProfile.phoneNumber}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -72,5 +74,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

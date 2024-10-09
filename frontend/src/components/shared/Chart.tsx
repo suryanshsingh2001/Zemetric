@@ -16,12 +16,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Stats } from "types";
 
-interface Stats {
-  smsSentInLastMinute: number;
-  totalSmsSentToday: number;
-  violations: number;
-}
+
 
 const chartConfig = {
   smsUsage: {

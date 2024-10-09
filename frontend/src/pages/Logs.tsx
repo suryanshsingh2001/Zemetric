@@ -19,13 +19,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import CONFIG from "../config";
-
-interface Log {
-  level: string;
-  message: string;
-  timestamp: number;
-  response: any;  
-}
+import { Log } from "types";
 
 
 

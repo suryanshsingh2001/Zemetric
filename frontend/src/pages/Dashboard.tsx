@@ -16,17 +16,11 @@ import {
 import CONFIG from "../config";
 
 import Chart from "@/components/shared/Chart";
+import { UserProfile, Stats } from "types";
 
-interface Stats {
-  smsSentInLastMinute: number;
-  totalSmsSentToday: number;
-  violations: number;
-}
 
-interface UserProfile {
-  name: string;
-  phoneNumber: string;
-}
+
+
 
 const userProfile: UserProfile = {
   name: "John Doe",
@@ -38,7 +32,6 @@ export default function Dashboard() {
   const [stats, setStats] = useState<Stats>({
     smsSentInLastMinute: 0,
     totalSmsSentToday: 0,
-    violations: 0,
   });
 
   const [violations, setViolations] = useState<number>(0);
