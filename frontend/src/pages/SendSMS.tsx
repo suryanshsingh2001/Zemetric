@@ -175,7 +175,7 @@ export default function SendSMS() {
       </div>
 
       {success && (
-        <Alert variant="success">
+        <Alert variant="default">
           <CheckCircle2 className="h-4 w-4 text-green-600" />
           <AlertTitle>Success</AlertTitle>
           <AlertDescription>
