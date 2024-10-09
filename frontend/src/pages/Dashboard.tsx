@@ -1,24 +1,12 @@
+"use client"
+
 import { useState, useEffect } from "react"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts"
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import axios from "axios"
@@ -26,6 +14,7 @@ import { MessageSquare, Calendar, AlertTriangle, Send } from "lucide-react"
 
 import CONFIG from "../../config"
 
+import Chart from "@/components/shared/Chart"
 interface Stats {
   smsSentInLastMinute: number
   totalSmsSentToday: number
@@ -70,13 +59,8 @@ export default function Dashboard() {
     fetchViolations()
   }, [])
 
-  const chartData = [
-    { name: "Minute Limit", limit: 3, used: stats.smsSentInLastMinute },
-    { name: "Daily Limit", limit: 10, used: stats.totalSmsSentToday },
-  ]
-
   return (
-    <div className="min-h-screen bg-gray-100 p-4 sm:p-6 md:p-8">
+    <div className="min-h-screen p-4 sm:p-6 md:p-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 flex items-center">
           <Send className="mr-2 h-6 w-6" /> SMS Rate Limiter Dashboard
@@ -127,46 +111,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>SMS Usage</CardTitle>
-            <CardDescription>Minute and daily limits</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer
-              config={{
-                limit: {
-                  label: "Limit",
-                  color: "hsl(var(--chart-1))",
-                },
-                used: {
-                  label: "Used",
-                  color: "hsl(var(--chart-2))",
-                },
-              }}
-              className="h-[300px]"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar
-                    dataKey="limit"
-                    fill="var(--color-limit)"
-                    name="Limit"
-                  />
-                  <Bar
-                    dataKey="used"
-                    fill="var(--color-used)"
-                    name="Used"
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
-          </CardContent>
-        </Card>
+        <Chart stats={stats} />
         <div className="mt-6">
           <Link to="/send-sms">
             <Button className="w-full sm:w-auto">
