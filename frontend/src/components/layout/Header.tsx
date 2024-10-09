@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Send, User, Moon, Sun } from "lucide-react";
+import { Send, User, Moon, Sun, Github } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -17,19 +17,34 @@ export function Header() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="bg-card shadow">
+    <header className="border-b bg-gradient-to-r from-card to-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <Send className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
-              SMS Rate Limiter
-            </h1>
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Send className="h-8 w-8 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                SMS Rate Limiter
+              </h1>
+              
+            </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             <Button
               variant="ghost"
               size="icon"
+              className="hover:bg-primary/10"
+              onClick={() => window.open('https://github.com', '_blank')}
+              aria-label="GitHub repository"
+            >
+              <Github className="h-5 w-5" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hover:bg-primary/10"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
             >
@@ -41,7 +56,11 @@ export function Header() {
             </Button>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="hover:bg-primary/10"
+                >
                   <User className="h-5 w-5" />
                 </Button>
               </PopoverTrigger>
@@ -54,15 +73,15 @@ export function Header() {
                     </p>
                   </div>
                   <div className="grid gap-2">
-                    <div className="grid grid-cols-3 items-center gap-4">
-                      <span className="text-sm">Name:</span>
-                      <span className="col-span-2 font-medium">
+                    <div className="grid grid-cols-3 items-center gap-4 p-2 rounded-lg hover:bg-muted transition-colors">
+                      <span className="text-sm font-medium">Name:</span>
+                      <span className="col-span-2">
                         {userProfile.name}
                       </span>
                     </div>
-                    <div className="grid grid-cols-3 items-center gap-4">
-                      <span className="text-sm">Phone:</span>
-                      <span className="col-span-2 font-medium">
+                    <div className="grid grid-cols-3 items-center gap-4 p-2 rounded-lg hover:bg-muted transition-colors">
+                      <span className="text-sm font-medium">Phone:</span>
+                      <span className="col-span-2">
                         {userProfile.phoneNumber}
                       </span>
                     </div>

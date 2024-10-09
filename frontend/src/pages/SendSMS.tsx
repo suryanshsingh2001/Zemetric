@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -9,7 +11,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, CheckCircle2, Loader2, ArrowLeft } from "lucide-react"
 import { Link } from "react-router-dom"
@@ -18,35 +28,38 @@ import CONFIG from "../config"
 import { mapResponse } from "@/lib/utils"
 import { MessageType } from "types"
 import { showToast } from "@/lib/toast"
+import { SMSFormData, smsFormSchema } from "@/zod"
 
 export default function SendSMS() {
-  const [phoneNumber, setPhoneNumber] = useState("8299381052")
-  const [message, setMessage] = useState("")
   const [response, setResponse] = useState<MessageType>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
 
-  const sendSMS = async () => {
+  const form = useForm<SMSFormData>({
+    resolver: zodResolver(smsFormSchema),
+    defaultValues: {
+      phoneNumber: "8299381052",
+      message: "",
+    },
+  })
+
+  const messageLength = form.watch("message")?.length || 0
+
+  const onSubmit = async (data: SMSFormData) => {
     setLoading(true)
     setError(false)
     setSuccess(false)
 
-
-    if(!phoneNumber || !message) {
-      showToast("Error", "Phone number and message are required.")
-      setLoading(false)
-      return
-    }
     try {
       const response = await axios.post(`${CONFIG.BASE_URL}sms/send`, {
-        phoneNumber,
-        message,
+        phoneNumber: data.phoneNumber,
+        message: data.message,
       })
 
       setResponse(mapResponse(response))
       setSuccess(true)
-      showToast("Success", "Message sent successfully to " + phoneNumber)
+      showToast("Success", "Message sent successfully to " + data.phoneNumber)
     } catch (error) {
       console.error("Error sending SMS:", error)
       setError(true)
@@ -79,38 +92,67 @@ export default function SendSMS() {
             <CardDescription>Compose and send your message</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="phoneNumber">Phone Number</Label>
-                <Input
-                  id="phoneNumber"
-                  placeholder="Enter phone number"
-                  value={phoneNumber}
-                  readOnly
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="phoneNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormDescription>
+                        Phone Number will be readonly and pre-filled
+                      </FormDescription>
+                      <FormControl>
+                        <Input 
+                          {...field}
+                          readOnly
+                          className="bg-muted cursor-not-allowed"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea
-                  id="message"
-                  placeholder="Enter your message here"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  rows={4}
+
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Message
+                        <span className="text-destructive ml-1">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Enter your message here"
+                          {...field}
+                          rows={4}
+                        />
+                      </FormControl>
+                    
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <Button onClick={sendSMS} disabled={loading} className="w-full">
-                {loading ? (
-                  <>
-                    <Loader2 className="animate-spin mr-2 h-4 w-4" />
-                    Sending...
-                  </>
-                ) : (
-                  "Send SMS"
-                )}
-              </Button>
-            </div>
+
+                <Button 
+                  type="submit"
+                  disabled={loading} 
+                  className="w-full"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send SMS"
+                  )}
+                </Button>
+              </form>
+            </Form>
           </CardContent>
         </Card>
 
@@ -137,7 +179,7 @@ export default function SendSMS() {
           <CheckCircle2 className="h-4 w-4" />
           <AlertTitle>Success</AlertTitle>
           <AlertDescription>
-            Message sent successfully to {phoneNumber}.
+            Message sent successfully to {form.watch("phoneNumber")}.
           </AlertDescription>
         </Alert>
       )}
