@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import redis from "../config/redis";
 import logger from "../utils/Logger";
 
@@ -9,10 +9,12 @@ export const sendSMS = async (req: Request, res: Response): Promise<void> => {
   const keyMinute = `sms:${ip}:${phoneNumber}:minute`;
   const keyDay = `sms:${ip}:${phoneNumber}:day`;
 
+  //Although, we have handled this case in client side, but still we are checking here
   if (!phoneNumber || !message) {
     logger.error("Missing required fields", {
-      error: { ip, phoneNumber, message },
+      response: { ip, phoneNumber, message },
     });
+
     res.status(400).json({ error: "Missing required fields" });
     return;
   }
@@ -45,7 +47,7 @@ export const sendSMS = async (req: Request, res: Response): Promise<void> => {
   } catch (error) {
     // console.error("Error sending SMS:", error);
     logger.error("Failed to send SMS", {
-      error: { ip, phoneNumber, message, error },
+      response: { ip, phoneNumber, message, error },
     });
     res.status(500).json({ error: "Failed to send SMS" });
   }

@@ -31,6 +31,13 @@ export default function SendSMS() {
     setLoading(true)
     setError(false)
     setSuccess(false)
+
+
+    if(!phoneNumber || !message) {
+      showToast("Error", "Phone number and message are required.")
+      setLoading(false)
+      return
+    }
     try {
       const response = await axios.post(`${CONFIG.BASE_URL}sms/send`, {
         phoneNumber,
