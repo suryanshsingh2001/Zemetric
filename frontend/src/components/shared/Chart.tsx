@@ -66,6 +66,8 @@ export default function SMSUsageCharts({ stats }: { stats: Stats }) {
   const remainingMinute = minuteLimit - stats.smsSentInLastMinute;
   const remainingDaily = dailyLimit - stats.totalSmsSentToday;
 
+  console.log(remainingDaily, "remainingDaily");
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <Card className="flex flex-col">
@@ -123,6 +125,15 @@ export default function SMSUsageCharts({ stats }: { stats: Stats }) {
             </PieChart>
           </ChartContainer>
         </CardContent>
+
+        {remainingMinute <= 0 && (
+          <CardFooter className="flex items-center justify-center space-x-2">
+            <div className="flex items-center space-x-2">
+              <TrendingDown className="h-4 w-4 text-red-600" />
+              <span>Minute Limit reached</span>
+            </div>
+          </CardFooter>
+        )}
       </Card>
 
       <Card className="flex flex-col">
@@ -180,7 +191,7 @@ export default function SMSUsageCharts({ stats }: { stats: Stats }) {
             </PieChart>
           </ChartContainer>
         </CardContent>
-        {remainingDaily === 0 && (
+        {remainingDaily <= 0 && (
           <CardFooter className="flex items-center justify-center space-x-2">
             <div className="flex items-center space-x-2">
               <TrendingDown className="h-4 w-4 text-red-600" />
