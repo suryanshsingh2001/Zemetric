@@ -175,8 +175,8 @@ export default function SendSMS() {
       </div>
 
       {success && (
-        <Alert variant="default">
-          <CheckCircle2 className="h-4 w-4" />
+        <Alert variant="success">
+          <CheckCircle2 className="h-4 w-4 text-green-600" />
           <AlertTitle>Success</AlertTitle>
           <AlertDescription>
             Message sent successfully to {form.watch("phoneNumber")}.
@@ -186,7 +186,7 @@ export default function SendSMS() {
 
       {error && (
         <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
+          <AlertCircle className="h-4 w-4 text-red-600" />
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>
             {response?.data?.message || "An error occurred."}

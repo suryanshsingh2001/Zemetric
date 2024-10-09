@@ -10,7 +10,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Header />
-      <App />
+      <main className="min-h-screen bg-background">
+        <App />
+      </main>
       <Toaster />
     </ThemeProvider>
   </StrictMode>

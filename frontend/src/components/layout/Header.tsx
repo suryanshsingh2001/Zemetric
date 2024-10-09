@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/popover";
 import { useTheme } from "../layout/theme-provider";
 import { UserProfile } from "types";
+import CONFIG from "@/config";
 
 const userProfile: UserProfile = {
   name: "John Doe",
@@ -22,12 +23,14 @@ export function Header() {
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <div className="p-2 bg-primary/10 rounded-lg">
-              <Send className="h-8 w-8 text-primary" />
+              <Send className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-foreground bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              <a href="/">
+              <h1 className="text-xl sm:text-2xl font-bold text-foreground bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                 SMS Rate Limiter
               </h1>
+              </a>
               
             </div>
           </div>
@@ -36,7 +39,7 @@ export function Header() {
               variant="ghost"
               size="icon"
               className="hover:bg-primary/10"
-              onClick={() => window.open('https://github.com', '_blank')}
+              onClick={() => window.open(`${CONFIG.GITHUB_URL}`, '_blank')}
               aria-label="GitHub repository"
             >
               <Github className="h-5 w-5" />

@@ -9,7 +9,7 @@ import {
   AlertTriangle,
   Send,
   FileText,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 
 import CONFIG from "../config";
@@ -60,12 +60,16 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome message */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold ">Welcome back, {userProfile.name}!</h1>
-          <p className="text-muted-foreground mt-2">Here's an overview of your SMS dashboard</p>
+          <h1 className="text-3xl font-bold ">
+            Welcome back, {userProfile.name}!
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            Here's an overview of your SMS dashboard
+          </p>
         </div>
 
         {/* Action buttons at the top */}
@@ -129,7 +133,9 @@ export default function Dashboard() {
             <CardContent className="space-y-4">
               <div>
                 <div className="text-2xl font-bold">{violations}</div>
-                <p className="text-xs text-muted-foreground">In the last hour</p>
+                <p className="text-xs text-muted-foreground">
+                  In the last hour
+                </p>
               </div>
               <Button variant="secondary" size="sm" className="w-full" asChild>
                 <Link to="/violations">
