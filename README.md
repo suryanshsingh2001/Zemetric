@@ -1,11 +1,27 @@
 # API Rate Limiter for SMS APIs with React Dashboard
 
+This project implements an API rate limiter for SMS APIs with a React dashboard to visualize SMS usage statistics and rate limit violations.
+
+## Table of Contents
+
+- [Screenshots](#screenshots)
+- [Technologies Used](#technologies-used)
+- [Task Overview](#task-overview)
+- [How to Run the Project Locally](#how-to-run-the-project-locally)
+- [API Usage](#api-usage)
+- [Folder Structure](#folder-structure)
+- [Contact](#contact)
+
+## Screenshots
+
 ## Technologies Used
 
 - Backend: Node.js (Express) with TypeScript
 - Frontend: React (TypeScript, Vite), Shadcn UI, Taildwind CSS
 - Storage: Redis (for rate-limiting persistence)
 - Logging: Winston (for structured logging)
+- Charts: Recharts, Shadcncharts (for data visualization)
+- Client Side Validation: Zod (for schema validation)
 - HTTP Client: Axios (for making API requests in the React dashboard)
 
 ## Task Overview
@@ -94,7 +110,13 @@ Redis is connected and responding:PONG
 
 4. Open your browser and navigate to `http://localhost:5173` to view the React dashboard.
 
-## API Endpoints
+## API Usage
+
+**Note** : Ip address is taken from the request when client sends a request.
+
+```js
+const ip = req.ip;
+```
 
 ### 1. Send SMS
 
@@ -108,8 +130,8 @@ Redis is connected and responding:PONG
 
 ```json
 {
-  "phoneNumber": "string", // The phone number to send SMS to
-  "message": "string" // The message content
+  "phoneNumber": "string",
+  "message": "string"
 }
 ```
 
@@ -155,12 +177,6 @@ Redis is connected and responding:PONG
 **Query Parameters**:
 
 - `phoneNumber`: The phone number for which to retrieve SMS usage stats.
-
-**Example Request**:
-
-```bash
-curl -X GET "http://localhost:3000/api/stats/usage?phoneNumber=1234567890"
-```
 
 **Response**:
 
@@ -211,7 +227,6 @@ curl -X GET "http://localhost:3000/api/stats/usage?phoneNumber=1234567890"
   }
   ```
 
-
 ### 4. Get All Logs
 
 **Endpoint**: `api/logs`
@@ -248,3 +263,53 @@ curl -X GET "http://localhost:3000/api/stats/usage?phoneNumber=1234567890"
     ]
   }
   ```
+
+---
+
+## Folder Structure
+
+### Backend
+
+```
+backend/
+├── logs
+├── src
+│   ├── controllers
+          smsController.ts
+          statsController.ts
+│   ├── middlewares
+          rateLimiter.ts
+│   ├── config
+          redis.ts
+│   ├── routes (sms, stats, logs)
+│   ├── utils
+├── app.ts
+```
+
+### Frontend
+
+```
+frontend/
+  ├── src/
+  │   ├── components
+  │   ├── pages/
+              Dashboard.tsx
+              Logs.tsx
+              SendSMS.tsx
+              Violations.tsx
+  │   ├── lib
+  │   ├── zod
+  │   App.tsx
+  │   main.tsx
+      config.ts
+  ├── types/
+  ├── public/
+```
+
+---
+
+## Contact
+
+- **Email**: [tashusingh2001@gmail.com](mailto:tashusingh2001@gmail.com)
+- **LinkedIn**: [Suryansh Singh](https://www.linkedin.com/in/suryanshsingh2001/)
+- **GitHub**: [@suryanshsingh2001](https://github.com/suryanshsingh2001)
