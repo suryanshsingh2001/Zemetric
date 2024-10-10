@@ -28,14 +28,15 @@ https://github.com/user-attachments/assets/a755a151-7cb8-4fd4-b1f1-dc13d276fd48
     </td>
   </tr>
   <tr>
+     <td>
+      <img src="https://github.com/suryanshsingh2001/Zemetric/blob/main/showcase/violations.png" alt="Violation" width="400"/><br/>
+      <p style="text-align:center;">Violations Page</p>
+    </td>
     <td>
       <img src="https://github.com/suryanshsingh2001/Zemetric/blob/main/showcase/logs.png" alt="Logs Page" width="400"/><br/>
       <p style="text-align:center;">Logs Page</p>
     </td>
-    <td>
-      <img src="https://github.com/suryanshsingh2001/Zemetric/blob/main/showcase/violations.png" alt="Violation" width="400"/><br/>
-      <p style="text-align:center;">Violation</p>
-    </td>
+   
   </tr>
 </table>
 
