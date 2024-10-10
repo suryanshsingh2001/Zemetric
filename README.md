@@ -1,4 +1,4 @@
-# 🚀 API Rate Limiter for SMS APIs with React Dashboard
+# API Rate Limiter for SMS APIs with React Dashboard
 
 This project provides a robust API rate limiting solution for SMS services, featuring a React-based dashboard for real-time monitoring of SMS usage and rate limit violations.
 
@@ -268,3 +268,7 @@ frontend/
 - **Email**: [tashusingh2001@gmail.com](mailto:tashusingh2001@gmail.com)
 - **LinkedIn**: [Suryansh Singh](https://www.linkedin.com/in/suryanshsingh2001/)
 - **GitHub**: [@suryanshsingh2001](https://github.com/suryanshsingh2001)
+
+
+---
+Hope you find this project interesting! 🚀
