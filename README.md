@@ -121,7 +121,7 @@ Here's an overview of how each functional and non-functional requirement was add
 
 **Endpoint**: `/api/sms/send`  
 **Method**: `POST`  
-**Description**: Sends an SMS message to a specified phone number. Rate limits are applied based on IP and phone number.
+**Description**: Sends an SMS message to a specified phone number. Rate limits are applied based on IP and phone number via middleware.
 
 **Request Body**:
 
