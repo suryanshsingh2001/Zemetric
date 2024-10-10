@@ -5,6 +5,36 @@ import logger from "../utils/Logger";
 const RATE_LIMIT_MINUTE = 3;
 const RATE_LIMIT_DAY = 10;
 
+/**
+ * Middleware function for rate limiting based on IP address and phone number.
+ * This function limits the number of requests that can be made from a specific IP address
+ * and phone number combination within a minute and a day.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @param {NextFunction} next - The next middleware function in the stack.
+ * @returns {Promise<void>} - A promise that resolves to void.
+ *
+ * @throws {Error} - Throws an error if there is an issue with the rate limiting process.
+ *
+ * @description
+ * The rate limiter checks the number of requests made from a specific IP address and phone number
+ * combination within a minute and a day. If the limit is exceeded, it responds with a 429 status code
+ * and a message indicating when the user can retry. It also logs the rate limit violations and sets
+ * an expiration for the violation logs.
+ *
+ * - Minute-based rate limiting:
+ *   - Key format: `sms:{ip}:{phoneNumber}:minute`
+ *   - If the number of requests exceeds `RATE_LIMIT_MINUTE`, it responds with a 429 status code
+ *     and a retry-after header indicating the remaining time in seconds.
+ *
+ * - Day-based rate limiting:
+ *   - Key format: `sms:{ip}:{phoneNumber}:day`
+ *   - If the number of requests exceeds `RATE_LIMIT_DAY`, it responds with a 429 status code
+ *     and a retry-after header indicating the remaining time in hours.
+ *
+ 
+ */
 const rateLimiter = async (
   req: Request,
   res: Response,

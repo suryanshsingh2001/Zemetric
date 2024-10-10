@@ -2,7 +2,20 @@ import fs from 'fs';
 import path from 'path';
 
 
-// Utility function to read logs from the file
+/**
+ * Reads the log file and returns the logs as an array of JSON objects.
+ *
+ * @returns {Promise<any[]>} A promise that resolves to an array of log entries parsed as JSON objects.
+ * 
+ * @throws Will throw an error if the log file cannot be read.
+ * 
+ * @example
+ * readLogs().then(logs => {
+ *   console.log(logs);
+ * }).catch(error => {
+ *   console.error('Error reading logs:', error);
+ * });
+ */
 export const readLogs = async (): Promise<any[]> => {
   const logFilePath = path.join(process.cwd(), 'logs', 'app.log');
 

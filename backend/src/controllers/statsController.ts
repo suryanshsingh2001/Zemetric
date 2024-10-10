@@ -3,6 +3,24 @@ import redis from "../config/redis";
 import logger from "../utils/Logger";
 
 // Fetch SMS usage stats (last minute and today)
+/**
+ * Retrieves SMS statistics for a given phone number and IP address.
+ * 
+ * @param req - The HTTP request object, containing query parameters.
+ * @param res - The HTTP response object, used to send back the desired HTTP response.
+ * 
+ * @returns A promise that resolves to void.
+ * 
+ * This function performs the following tasks:
+ * 1. Extracts the `phoneNumber` from the query parameters and the `ip` from the request.
+ * 2. Logs an error and responds with a 400 status code if the `phoneNumber` is missing.
+ * 3. Constructs Redis keys for tracking SMS counts per minute and per day.
+ * 4. Retrieves the SMS counts and rate limit violations from Redis.
+ * 5. Logs the retrieved statistics and responds with a 200 status code and the statistics in JSON format.
+ * 6. Logs an error and responds with a 500 status code if there is a failure in retrieving the statistics.
+ * 
+ * @throws Will throw an error if there is an issue with Redis operations.
+ */
 export const getSMSStats = async (
   req: Request,
   res: Response
@@ -53,7 +71,23 @@ export const getSMSStats = async (
   }
 };
 
-// Fetch rate limit violations (log them in Redis, if required)
+
+
+/**
+ * Retrieves the rate limit violations for a specific IP address from Redis and sends them in the response.
+ *
+ * @param req - The HTTP request object, containing the IP address.
+ * @param res - The HTTP response object, used to send the response.
+ * @returns A promise that resolves to void.
+ *
+ * @remarks
+ * This function fetches the rate limit violations for the IP address found in the request object.
+ * It retrieves the violations from a Redis list and logs the number of violations retrieved.
+ * If successful, it sends the violations in the response with a 200 status code.
+ * If an error occurs during retrieval, it logs the error and sends a 500 status code with an error message.
+ *
+  * @throws Will throw an error if there is an issue with Redis operations.
+ */
 export const getRateLimitViolations = async (
   req: Request,
   res: Response

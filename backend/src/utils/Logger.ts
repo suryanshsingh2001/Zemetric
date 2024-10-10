@@ -12,6 +12,24 @@ const logFormat = printf(({ level, message, timestamp, ...meta }) => {
 });
 
 // Configure the logger
+/**
+ * Creates a logger instance with specified configurations.
+ * 
+ * The logger is configured to log messages at the "info" level and above.
+ * It uses a combination of timestamp and custom log format for both console and file transports.
+ * 
+ * Console Transport:
+ * - Logs are displayed in a pretty format with a timestamp and custom log format.
+ * - Metadata, if present, is included in the log output.
+ * 
+ * File Transport:
+ * - Logs are written to "logs/app.log" in JSON format.
+ * - The log file is overwritten on each run.
+ * - Each log entry includes a timestamp and is structured as JSON.
+ * 
+ * @constant
+ * @type {Logger}
+ */
 const logger = createLogger({
   level: "info", // Set log level
   format: combine(
