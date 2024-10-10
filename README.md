@@ -69,6 +69,7 @@ Here's an overview of how each requirement was addressed, along with additional 
 ## How to Run the Project Locally
 
 ### Quick Note
+
 **Make sure to run backend and frontend separately in different terminals.**
 
 ### For Backend
@@ -88,25 +89,16 @@ Redis is connected and responding:PONG
 
 1. Navigate to the `frontend` directory.
 2. Run `npm install` to install dependencies.
-3. For environment variables, create a `.env` file in the `frontend` directory and add the following:
-
-```bash
-VITE_API_URL=http://localhost:3000/api/
-```
-
-
-> Note: This  url is set by default for the backend server in `configs` file. No need to add .env file if you are running backend on `http://localhost:3000`. 
 
 3. Run `npm run dev` to start the frontend server. This will start the server on `http://localhost:5173`.
 
 4. Open your browser and navigate to `http://localhost:5173` to view the React dashboard.
 
-
 ## API Endpoints
 
 ### 1. Send SMS
 
-**Endpoint**: `/sms/send`
+**Endpoint**: `api/sms/send`
 
 **Method**: `POST`
 
@@ -116,14 +108,15 @@ VITE_API_URL=http://localhost:3000/api/
 
 ```json
 {
-  "phoneNumber": "string",      // The phone number to send SMS to
-  "message": "string"           // The message content
+  "phoneNumber": "string", // The phone number to send SMS to
+  "message": "string" // The message content
 }
 ```
 
 **Response**:
 
 - **Success**: `200 OK`
+
   ```json
   {
     "status": "success",
@@ -132,6 +125,7 @@ VITE_API_URL=http://localhost:3000/api/
   ```
 
 - **Rate Limit Exceeded**: `429 Too Many Requests`
+
   ```json
   {
     "status": "error",
@@ -152,11 +146,11 @@ VITE_API_URL=http://localhost:3000/api/
 
 ### 2. Get SMS Usage Stats
 
-**Endpoint**: `/stats/usage`
+**Endpoint**: `api/stats/usage`
 
 **Method**: `GET`
 
-**Description**: Retrieves the current SMS usage statistics for a given phone number.
+**Description**: Retrieves the current SMS usage statistics for a given phone number along with a count of rate limit violations present in the last hour.
 
 **Query Parameters**:
 
@@ -171,11 +165,12 @@ curl -X GET "http://localhost:3000/api/stats/usage?phoneNumber=1234567890"
 **Response**:
 
 - **Success**: `200 OK`
+
   ```json
   {
-    "phoneNumber": "1234567890",
     "smsSentLastMinute": 3,
-    "smsSentToday": 10
+    "smsSentToday": 10,
+    "violations": 2
   }
   ```
 
@@ -191,33 +186,65 @@ curl -X GET "http://localhost:3000/api/stats/usage?phoneNumber=1234567890"
 
 ### 3. Get Rate Limit Violations
 
-**Endpoint**: `/stats/violations`
+**Endpoint**: `api/stats/violations`
 
 **Method**: `GET`
 
-**Description**: Retrieves the rate limit violations that occurred in the last hour.
+**Description**: Retrieves the rate limit violation messages that occurred in the last hour.
 
 **Response**:
 
 - **Success**: `200 OK`
+
   ```json
   {
     "violations": [
       {
-        "phoneNumber": "1234567890",
-        "ipAddress": "192.168.0.1",
-        "time": "2024-10-08T12:00:00Z",
-        "limitType": "minute",
-        "retryAfter": "60 seconds"
+        "ip": ":1",
+        "message": "Daily limit exceeded. Try again in X hours"
       },
       {
-        "phoneNumber": "0987654321",
-        "ipAddress": "192.168.0.2",
-        "time": "2024-10-08T12:05:00Z",
-        "limitType": "day",
-        "retryAfter": "24 hours"
+        "ip": ":1",
+        "message": "Minute limit exceeded. Try again in X seconds"
       }
     ]
   }
   ```
 
+
+### 4. Get All Logs
+
+**Endpoint**: `api/logs`
+
+**Method**: `GET`
+
+**Description**: Retrieves all logs along with their response data in JSON format. You can view in the Logs page in the React dashboard.
+
+**Response**:
+
+- **Success**: `200 OK`
+
+  ```json
+  {
+    "logs": [
+      {
+        "timestamp": "2021-10-10T12:00:00.000Z",
+        "level": "info",
+        "message": "SMS sent successfully",
+        "data": {
+          "phoneNumber": "1234567890",
+          "message": "Hello, world!"
+        }
+      },
+      {
+        "timestamp": "2021-10-10T12:00:00.000Z",
+        "level": "error",
+        "message": "Rate limit exceeded",
+        "data": {
+          "phoneNumber": "1234567890",
+          "message": "Hello, world!"
+        }
+      }
+    ]
+  }
+  ```

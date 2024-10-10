@@ -10,6 +10,14 @@ export const getSMSStats = async (
   const { phoneNumber } = req.query;
   const ip = req.ip;
 
+  if (!phoneNumber) {
+    logger.error("Missing required fields", {
+      response: { ip, phoneNumber },
+    });
+    res.status(400).json({ error: "Bad Request: Missing phoneNumber" });
+    return;
+  }
+
   const keyMinute = `sms:${ip}:${phoneNumber}:minute`;
   const keyDay = `sms:${ip}:${phoneNumber}:day`;
 
