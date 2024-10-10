@@ -1,133 +1,99 @@
-# API Rate Limiter for SMS APIs with React Dashboard
 
-This project implements an API rate limiter for SMS APIs with a React dashboard to visualize SMS usage statistics and rate limit violations.
+# 🚀 API Rate Limiter for SMS APIs with React Dashboard
 
-## Table of Contents
+This project provides a robust API rate limiting solution for SMS services, featuring a React-based dashboard for real-time monitoring of SMS usage and rate limit violations.
 
-- [Screenshots](#screenshots)
-- [Technologies Used](#technologies-used)
-- [Task Overview](#task-overview)
-- [How to Run the Project Locally](#how-to-run-the-project-locally)
-- [API Usage](#api-usage)
-- [Folder Structure](#folder-structure)
-- [Contact](#contact)
+## 🗂️ Table of Contents
 
-## Screenshots
+- [📷 Screenshots](#screenshots)
+- [🛠️ Technologies Used](#technologies-used)
+- [📝 Task Overview](#task-overview)
+- [⚙️ How to Run the Project Locally](#how-to-run-the-project-locally)
+- [📡 API Usage](#api-usage)
+- [📁 Folder Structure](#folder-structure)
+- [📧 Contact](#contact)
 
-## Technologies Used
+## 📷 Screenshots
 
-- Backend: Node.js (Express) with TypeScript
-- Frontend: React (TypeScript, Vite), Shadcn UI, Taildwind CSS
-- Storage: Redis (for rate-limiting persistence)
-- Logging: Winston (for structured logging)
-- Charts: Recharts, Shadcncharts (for data visualization)
-- Client Side Validation: Zod (for schema validation)
-- HTTP Client: Axios (for making API requests in the React dashboard)
+_Include screenshots of the dashboard and features here._
 
-## Task Overview
+## 🛠️ Technologies Used
 
-Here's an overview of how each requirement was addressed, along with additional features implemented:
+- **Backend**: Node.js (Express, TypeScript)
+- **Frontend**: React (TypeScript, Vite), Shadcn UI, Tailwind CSS
+- **Storage**: Redis for rate-limiting persistence
+- **Visualization**: Recharts, Shadcncharts
+- **Validation**: Zod
+- **HTTP Client**: Axios
+- **Logging**: Winston
 
-### 1. Rate Limiting
+## 📝 Task Overview
 
-- [x] Used Redis to store rate limit counters keyed by both IP address and phone number.
-- [x] Applied middleware to check rate limits on each request.
-- [x] Configured Redis TTL for minute and day-based tracking.
+Here's an overview of how each functional and non-functional requirement was addressed:
 
-### 2. Throttling
-
-- [x] Responded with a `429 Too Many Requests` status when limits are exceeded.
-- [x] Added `Retry-After` header in responses to inform clients when to retry.
-
-### 3. Persistent Storage
-
-- [x] Used Redis for persistent storage of rate limit data across API instances.
-- [x] Configured Redis to use TTL to expire keys appropriately for daily and minute-based limits.
-
-### 4. Logging
-
-- [x] Implemented structured logging using Winston.
-- [x] Captured IP address, phone number, request time, and rate limit violations in logs.
-
-### 5. Error Handling
-
-- [x] Added error-handling middleware for invalid requests.
-- [x] Returned appropriate error responses (`400 Bad Request`, `500 Internal Server Error`).
-
-### 6. React Dashboard
-
-- [x] Developed SMS usage statistics display (SMS sent in the last minute and today).
-- [x] Created rate limit violation logs display for the last hour.
-- [x] Built a dedicated page for sending SMS messages with response status view displayed.
+### Functional Requirements
+- **Rate Limiting**: Used Redis to store rate limit counters keyed by both IP address and phone number.
+- **Throttling**: Responded with `429 Too Many Requests` status and `Retry-After` header.
+  
+### Non-Functional Requirements
+- **Persistent Storage**: Redis TTL was configured for minute and day-based limits.
+- **Logging**: Structured logging with Winston to capture request info and violations.
+- **Error Handling**: Error middleware handles invalid requests and returns appropriate responses (`400`, `500`).
 
 ---
 
-### Bonus Features Implemented
+### 🎉 Additional Features
 
-### 1. Dedicated Logs Page
+1. **📜 Dedicated Logs Page**:
+   - View all logs, filter logs by type, and sort by timestamp.
+   - Access logs in `backend/logs`.
 
-- [x] Added a page to display all logs along with their response data in JSON with the ability to:
-  - Filter logs by type (e.g., info, error).
-  - Sort logs by timestamp.
-  - Access the `app.log` file in `backend/logs` to view logs file directly.
+2. **⛔ Violation List Page**:
+   - Displays all rate limit violations with timestamps.
 
-### 2. Violation List Page
-
-- [x] Created a dedicated page that shows all rate limit violations along with timestamps.
-
-### 3. Chart System in Dashboard
-
-- [x] Integrated a chart system using `recharts` and `shadcncharts` for a more intuitive view of SMS statistics.
-- [x] Visualized SMS sent per minute and per day using charts for easier data interpretation.
+3. **📊 Chart System**:
+   - Intuitive charts visualize SMS sent per minute and per day using Recharts and Shadcncharts.
 
 ---
 
-## How to Run the Project Locally
+## ⚙️ How to Run the Project Locally
 
-### Quick Note
+**Quick Note**: Run backend and frontend separately in different terminals.
 
-**Make sure to run backend and frontend separately in different terminals.**
-
-### For Backend
+### 🔧 For Backend
 
 1. Navigate to the `backend` directory.
 2. Run `npm install` to install dependencies.
-3. Make sure you have Redis installed and running on your machine. You will get a message on console for Redis connection.
+3. Make sure Redis is installed and running on your machine. You can use Docker to run Redis with:
+   ```bash
+   docker run -p 6379:6379 redis
+   ```
+4. Run `npm start` to start the backend server. The server will be available on `http://localhost:3000` and will connect to Redis with:
+   ```bash
+   Connected to Redis server
+   Redis is connected and responding:PONG
+   ```
 
-```bash
-Connected to Redis server
-Redis is connected and responding:PONG
-```
-
-3. Run `npm start` to start the backend server. This will start the server on `http://localhost:3000` and automatically builds the ts files and starts the server.
-
-### For Frontend
+### 🖥️ For Frontend
 
 1. Navigate to the `frontend` directory.
 2. Run `npm install` to install dependencies.
+3. Run `npm run dev` to start the frontend server on `http://localhost:5173`.
+4. Open `http://localhost:5173` in your browser to view the dashboard.
 
-3. Run `npm run dev` to start the frontend server. This will start the server on `http://localhost:5173`.
+---
 
-4. Open your browser and navigate to `http://localhost:5173` to view the React dashboard.
+## 📡 API Usage
 
-## API Usage
+**Note**: IP address is taken from the request.
 
-**Note** : Ip address is taken from the request when client sends a request.
+### 1. 📤 Send SMS
 
-```js
-const ip = req.ip;
-```
-
-### 1. Send SMS
-
-**Endpoint**: `api/sms/send`
-
-**Method**: `POST`
-
+**Endpoint**: `/api/sms/send`  
+**Method**: `POST`  
 **Description**: Sends an SMS message to a specified phone number. Rate limits are applied based on IP and phone number.
 
 **Request Body**:
-
 ```json
 {
   "phoneNumber": "string",
@@ -136,18 +102,14 @@ const ip = req.ip;
 ```
 
 **Response**:
-
 - **Success**: `200 OK`
-
   ```json
   {
     "status": "success",
     "message": "SMS sent successfully"
   }
   ```
-
 - **Rate Limit Exceeded**: `429 Too Many Requests`
-
   ```json
   {
     "status": "error",
@@ -155,135 +117,96 @@ const ip = req.ip;
     "retryAfter": "X seconds"
   }
   ```
+  - Headers:  
+    `Retry-After: <X seconds>`
 
-- **Validation Error**: `400 Bad Request`
-  ```json
-  {
-    "status": "error",
-    "message": "Invalid phone number or message content"
-  }
-  ```
+### 2. 📊 Get SMS Usage Stats
 
----
-
-### 2. Get SMS Usage Stats
-
-**Endpoint**: `api/stats/usage`
-
-**Method**: `GET`
-
-**Description**: Retrieves the current SMS usage statistics for a given phone number along with a count of rate limit violations present in the last hour.
+**Endpoint**: `/api/stats/usage`  
+**Method**: `GET`  
+**Description**: Retrieves SMS usage stats and rate limit violations for a given phone number.
 
 **Query Parameters**:
-
 - `phoneNumber`: The phone number for which to retrieve SMS usage stats.
 
 **Response**:
+```json
+{
+  "smsSentLastMinute": 3,
+  "smsSentToday": 10,
+  "violations": 2
+}
+```
 
-- **Success**: `200 OK`
+### 3. 📄 Get Rate Limit Violations
 
-  ```json
-  {
-    "smsSentLastMinute": 3,
-    "smsSentToday": 10,
-    "violations": 2
-  }
-  ```
-
-- **Invalid Request**: `400 Bad Request`
-  ```json
-  {
-    "status": "error",
-    "message": "Phone number is required"
-  }
-  ```
-
----
-
-### 3. Get Rate Limit Violations
-
-**Endpoint**: `api/stats/violations`
-
-**Method**: `GET`
-
+**Endpoint**: `/api/stats/violations`  
+**Method**: `GET`  
 **Description**: Retrieves the rate limit violation messages that occurred in the last hour.
 
 **Response**:
+```json
+{
+  "violations": [
+    {
+      "ip": ":1",
+      "message": "Daily limit exceeded. Try again in X hours"
+    },
+    {
+      "ip": ":1",
+      "message": "Minute limit exceeded. Try again in X seconds"
+    }
+  ]
+}
+```
 
-- **Success**: `200 OK`
+### 4. 📜 Get All Logs
 
-  ```json
-  {
-    "violations": [
-      {
-        "ip": ":1",
-        "message": "Daily limit exceeded. Try again in X hours"
-      },
-      {
-        "ip": ":1",
-        "message": "Minute limit exceeded. Try again in X seconds"
-      }
-    ]
-  }
-  ```
-
-### 4. Get All Logs
-
-**Endpoint**: `api/logs`
-
-**Method**: `GET`
-
-**Description**: Retrieves all logs along with their response data in JSON format. You can view in the Logs page in the React dashboard.
+**Endpoint**: `/api/logs`  
+**Method**: `GET`  
+**Description**: Retrieves all logs along with their response data in JSON format. You can view them in the Logs page in the React dashboard.
 
 **Response**:
-
-- **Success**: `200 OK`
-
-  ```json
-  {
-    "logs": [
-      {
-        "timestamp": "2021-10-10T12:00:00.000Z",
-        "level": "info",
-        "message": "SMS sent successfully",
-        "data": {
-          "phoneNumber": "1234567890",
-          "message": "Hello, world!"
-        }
-      },
-      {
-        "timestamp": "2021-10-10T12:00:00.000Z",
-        "level": "error",
-        "message": "Rate limit exceeded",
-        "data": {
-          "phoneNumber": "1234567890",
-          "message": "Hello, world!"
-        }
+```json
+{
+  "logs": [
+    {
+      "timestamp": "2021-10-10T12:00:00.000Z",
+      "level": "info",
+      "message": "SMS sent successfully",
+      "data": {
+        "phoneNumber": "1234567890",
+        "message": "Hello, world!"
       }
-    ]
-  }
-  ```
+    },
+    {
+      "timestamp": "2021-10-10T12:00:00.000Z",
+      "level": "error",
+      "message": "Rate limit exceeded",
+      "data": {
+        "phoneNumber": "1234567890",
+        "message": "Hello, world!"
+      }
+    }
+  ]
+}
+```
 
 ---
 
-## Folder Structure
+## 📁 Folder Structure
 
 ### Backend
 
 ```
 backend/
-├── logs
-├── src
-│   ├── controllers
-          smsController.ts
-          statsController.ts
-│   ├── middlewares
-          rateLimiter.ts
-│   ├── config
-          redis.ts
-│   ├── routes (sms, stats, logs)
-│   ├── utils
-├── app.ts
+├── logs                   # Log files
+├── src                    
+│   ├── controllers         # Request handlers
+│   ├── middlewares         # Middleware functions
+│   ├── config              # Redis configurations
+│   ├── routes              # API routes
+├── app.ts                  # Server entry point
 ```
 
 ### Frontend
@@ -292,11 +215,7 @@ backend/
 frontend/
   ├── src/
   │   ├── components
-  │   ├── pages/
-              Dashboard.tsx
-              Logs.tsx
-              SendSMS.tsx
-              Violations.tsx
+  │   ├── pages
   │   ├── lib
   │   ├── zod
   │   App.tsx
@@ -308,7 +227,7 @@ frontend/
 
 ---
 
-## Contact
+## 📧 Contact
 
 - **Email**: [tashusingh2001@gmail.com](mailto:tashusingh2001@gmail.com)
 - **LinkedIn**: [Suryansh Singh](https://www.linkedin.com/in/suryanshsingh2001/)
