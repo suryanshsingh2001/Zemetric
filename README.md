@@ -40,6 +40,9 @@ https://github.com/user-attachments/assets/a755a151-7cb8-4fd4-b1f1-dc13d276fd48
   </tr>
 </table>
 
+
+---
+
 ## 🛠️ Technologies Used
 
 - **Backend**: Node.js (Express, TypeScript)
