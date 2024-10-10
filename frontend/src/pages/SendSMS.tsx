@@ -1,16 +1,16 @@
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -19,22 +19,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, CheckCircle2, Loader2, ArrowLeft } from "lucide-react"
-import { Link } from "react-router-dom"
-import axios from "axios"
-import CONFIG from "../config"
-import { mapResponse } from "@/lib/utils"
-import { MessageType } from "types"
-import { showToast } from "@/lib/toast"
-import { SMSFormData, smsFormSchema } from "@/zod"
+} from "@/components/ui/form";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle, CheckCircle2, Loader2, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import CONFIG from "../config";
+import { mapResponse } from "@/lib/utils";
+import { MessageType } from "types";
+import { showToast } from "@/lib/toast";
+import { SMSFormData, smsFormSchema } from "@/zod";
 
 export default function SendSMS() {
-  const [response, setResponse] = useState<MessageType>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [response, setResponse] = useState<MessageType>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const form = useForm<SMSFormData>({
     resolver: zodResolver(smsFormSchema),
@@ -42,37 +42,41 @@ export default function SendSMS() {
       phoneNumber: "8299381052",
       message: "",
     },
-  })
+  });
 
-  const messageLength = form.watch("message")?.length || 0
+  const messageLength = form.watch("message")?.length || 0;
 
   const onSubmit = async (data: SMSFormData) => {
-    setLoading(true)
-    setError(false)
-    setSuccess(false)
+    setLoading(true);
+    setError(false);
+    setSuccess(false);
 
     try {
       const response = await axios.post(`${CONFIG.BASE_URL}sms/send`, {
         phoneNumber: data.phoneNumber,
         message: data.message,
-      })
+      });
 
-      setResponse(mapResponse(response))
-      setSuccess(true)
-      showToast("Success", "Message sent successfully to " + data.phoneNumber)
+      setResponse(mapResponse(response));
+      setSuccess(true);
+      showToast("Success", "Message sent successfully to " + data.phoneNumber);
+
+
+      form.reset();
     } catch (error) {
-      console.error("Error sending SMS:", error)
-      setError(true)
+      console.error("Error sending SMS:", error);
+      setError(true);
       showToast(
         "Error",
         (error as any).response?.data?.message || "An error occurred."
-      )
+      );
 
-      setResponse(mapResponse((error as any).response))
+      setResponse(mapResponse((error as any).response));
+
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="container mx-auto p-4 space-y-4 max-w-7xl">
@@ -93,7 +97,10 @@ export default function SendSMS() {
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 <FormField
                   control={form.control}
                   name="phoneNumber"
@@ -104,7 +111,7 @@ export default function SendSMS() {
                         Phone Number will be readonly and pre-filled
                       </FormDescription>
                       <FormControl>
-                        <Input 
+                        <Input
                           {...field}
                           readOnly
                           className="bg-muted cursor-not-allowed"
@@ -131,17 +138,13 @@ export default function SendSMS() {
                           rows={4}
                         />
                       </FormControl>
-                    
+
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-                <Button 
-                  type="submit"
-                  disabled={loading} 
-                  className="w-full"
-                >
+                <Button type="submit" disabled={loading} className="w-full">
                   {loading ? (
                     <>
                       <Loader2 className="animate-spin mr-2 h-4 w-4" />
@@ -194,5 +197,5 @@ export default function SendSMS() {
         </Alert>
       )}
     </div>
-  )
+  );
 }

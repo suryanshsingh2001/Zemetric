@@ -29,8 +29,11 @@ const rateLimiter = async (
       );
       await redis.expire(`rateLimitViolations:${ip}`, 60 * 60); // Expire violations after 1 hour
 
+      //Add retry-after header
+
       res.status(429).json({
         message: `Too many requests, try again in ${ttlMinute} seconds`,
+        retryAfter: ttlMinute,
       });
 
       logger.error(`Too many requests, try again in ${ttlMinute} seconds`, {
@@ -62,6 +65,7 @@ const rateLimiter = async (
         message: `Daily limit reached, try again in ${Math.ceil(
           ttlDay / 60 / 60
         )} hours`,
+        retryafter: Math.ceil(ttlDay / 60 / 60),
       });
 
       logger.error(

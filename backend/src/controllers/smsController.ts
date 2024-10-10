@@ -32,9 +32,6 @@ export const sendSMS = async (req: Request, res: Response): Promise<void> => {
       await redis.expire(keyDay, 24 * 60 * 60); // Set 24-hour expiration
     }
 
-    // Log SMS sent
-    // console.log(`SMS sent to ${phoneNumber} from ${ip}: ${message}`);
-
     logger.info("SMS sent successfully", {
       response: {
         ip,
