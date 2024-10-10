@@ -263,11 +263,13 @@ frontend/
 
 ---
 
-## 📧 Contact
+## 📫 Contact
 
-- **Email**: [tashusingh2001@gmail.com](mailto:tashusingh2001@gmail.com)
-- **LinkedIn**: [Suryansh Singh](https://www.linkedin.com/in/suryanshsingh2001/)
-- **GitHub**: [@suryanshsingh2001](https://github.com/suryanshsingh2001)
+[![Email](https://img.shields.io/badge/Email-tashusingh2001%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:tashusingh2001@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Suryansh_Singh-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/suryanshsingh2001/)
+[![GitHub](https://img.shields.io/badge/GitHub-suryanshsingh2001-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/suryanshsingh2001)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit_Now-4CAF50?style=for-the-badge&logo=react&logoColor=white)](https://your-portfolio-url.com)
+
 
 
 ---
