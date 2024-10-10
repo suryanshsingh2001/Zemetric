@@ -35,14 +35,8 @@ import {
 
 import CONFIG from "../config"
 
-type Log = {
-  level: string
-  message: string
-  timestamp: string
-  response: any
-}
+import { Log, SortOrder } from "types"
 
-type SortOrder = "asc" | "desc"
 
 export default function LogsPage() {
   const [logs, setLogs] = useState<Log[]>([])

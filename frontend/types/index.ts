@@ -15,8 +15,10 @@ export interface Stats {
 }
 
 export interface Log {
-    level: string;
-    message: string;
-    timestamp: number;
-    response: any;  
-  }
+  level: string;
+  message: string;
+  timestamp: number;
+  response: any;
+}
+
+export type SortOrder = "asc" | "desc";
