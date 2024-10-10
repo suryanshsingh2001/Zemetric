@@ -1,4 +1,3 @@
-
 # 🚀 API Rate Limiter for SMS APIs with React Dashboard
 
 This project provides a robust API rate limiting solution for SMS services, featuring a React-based dashboard for real-time monitoring of SMS usage and rate limit violations.
@@ -32,23 +31,27 @@ _Include screenshots of the dashboard and features here._
 Here's an overview of how each functional and non-functional requirement was addressed:
 
 ### Functional Requirements
-- **Rate Limiting**: Used Redis to store rate limit counters keyed by both IP address and phone number.
-- **Throttling**: Responded with `429 Too Many Requests` status and `Retry-After` header.
-  
+
+- [x] **Rate Limiting**: Used Redis to store rate limit counters keyed by both IP address and phone number.
+- [x] **Throttling**: Responded with `429 Too Many Requests` status and `Retry-After` header.
+
 ### Non-Functional Requirements
-- **Persistent Storage**: Redis TTL was configured for minute and day-based limits.
-- **Logging**: Structured logging with Winston to capture request info and violations.
-- **Error Handling**: Error middleware handles invalid requests and returns appropriate responses (`400`, `500`).
+
+- [x] **Persistent Storage**: Redis TTL was configured for minute and day-based limits.
+- [x] **Logging**: Structured logging with Winston to capture request info and violations.
+- [x] **Error Handling**: Error middleware handles invalid requests and returns appropriate responses (`400`, `500`).
 
 ---
 
 ### 🎉 Additional Features
 
 1. **📜 Dedicated Logs Page**:
+
    - View all logs, filter logs by type, and sort by timestamp.
    - Access logs in `backend/logs`.
 
 2. **⛔ Violation List Page**:
+
    - Displays all rate limit violations with timestamps.
 
 3. **📊 Chart System**:
@@ -94,6 +97,7 @@ Here's an overview of how each functional and non-functional requirement was add
 **Description**: Sends an SMS message to a specified phone number. Rate limits are applied based on IP and phone number.
 
 **Request Body**:
+
 ```json
 {
   "phoneNumber": "string",
@@ -102,6 +106,7 @@ Here's an overview of how each functional and non-functional requirement was add
 ```
 
 **Response**:
+
 - **Success**: `200 OK`
   ```json
   {
@@ -127,9 +132,11 @@ Here's an overview of how each functional and non-functional requirement was add
 **Description**: Retrieves SMS usage stats and rate limit violations for a given phone number.
 
 **Query Parameters**:
+
 - `phoneNumber`: The phone number for which to retrieve SMS usage stats.
 
 **Response**:
+
 ```json
 {
   "smsSentLastMinute": 3,
@@ -145,6 +152,7 @@ Here's an overview of how each functional and non-functional requirement was add
 **Description**: Retrieves the rate limit violation messages that occurred in the last hour.
 
 **Response**:
+
 ```json
 {
   "violations": [
@@ -167,6 +175,7 @@ Here's an overview of how each functional and non-functional requirement was add
 **Description**: Retrieves all logs along with their response data in JSON format. You can view them in the Logs page in the React dashboard.
 
 **Response**:
+
 ```json
 {
   "logs": [
@@ -201,7 +210,7 @@ Here's an overview of how each functional and non-functional requirement was add
 ```
 backend/
 ├── logs                   # Log files
-├── src                    
+├── src
 │   ├── controllers         # Request handlers
 │   ├── middlewares         # Middleware functions
 │   ├── config              # Redis configurations
