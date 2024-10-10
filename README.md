@@ -75,7 +75,7 @@ Here's an overview of how each functional and non-functional requirement was add
 1. **📜 Dedicated Logs Page**:
 
    - View all logs, filter logs by type, and sort by timestamp.
-   - Access logs in `backend/logs`.
+   - Access logs in `backend/logs/app.log`.
 
 2. **⛔ Violation List Page**:
 
