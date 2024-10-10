@@ -2,6 +2,14 @@
 
 This project provides a robust API rate limiting solution for SMS services, featuring a React-based dashboard for real-time monitoring of SMS usage and rate limit violations.
 
+
+
+
+https://github.com/user-attachments/assets/0fa428e8-d0c6-4d69-b51b-7cf5e5b78448
+
+
+
+
 ## 🗂️ Table of Contents
 
 - [📷 Screenshots](#screenshots)
