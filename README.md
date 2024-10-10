@@ -2,14 +2,7 @@
 
 This project provides a robust API rate limiting solution for SMS services, featuring a React-based dashboard for real-time monitoring of SMS usage and rate limit violations.
 
-
-
-
-
 https://github.com/user-attachments/assets/a755a151-7cb8-4fd4-b1f1-dc13d276fd48
-
-
-
 
 ## 🗂️ Table of Contents
 
@@ -23,7 +16,28 @@ https://github.com/user-attachments/assets/a755a151-7cb8-4fd4-b1f1-dc13d276fd48
 
 ## 📷 Screenshots
 
-_Include screenshots of the dashboard and features here._
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/suryanshsingh2001/Zemetric/blob/main/showcase/dashboard.png" alt="Dashboard" width="200"/><br/>
+      <p style="text-align:center;">Dashboard</p>
+    </td>
+    <td>
+      <img src="https://github.com/suryanshsingh2001/Zemetric/blob/main/showcase/sendsms.png" alt="Send SMS" width="200"/><br/>
+      <p style="text-align:center;">Send SMS</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/suryanshsingh2001/Zemetric/blob/main/showcase/logs.png" alt="Logs Page" width="200"/><br/>
+      <p style="text-align:center;">Logs Page</p>
+    </td>
+    <td>
+      <img src="https://github.com/suryanshsingh2001/Zemetric/blob/main/showcase/violations.png" alt="Violation" width="200"/><br/>
+      <p style="text-align:center;">Violation</p>
+    </td>
+  </tr>
+</table>
 
 ## 🛠️ Technologies Used
 
