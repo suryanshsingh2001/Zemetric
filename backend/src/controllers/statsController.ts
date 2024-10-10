@@ -17,18 +17,25 @@ export const getSMSStats = async (
     const minuteCount = (await redis.get(keyMinute)) || 0;
     const dayCount = (await redis.get(keyDay)) || 0;
 
+    //Get violations here as well
+    const violations = await redis.lrange(`rateLimitViolations:${ip}`, 0, -1);
+
+    const violationsCount = violations.length;
+
     logger.info("SMS statistics retrieved", {
       response: {
         ip,
         phoneNumber,
         minuteCount,
         dayCount,
+        violationsCount,
       },
     });
 
     res.status(200).json({
       smsSentInLastMinute: parseInt(minuteCount as string),
       totalSmsSentToday: parseInt(dayCount as string),
+      violations: violationsCount,
     });
   } catch (error) {
     logger.error("Failed to retrieve SMS statistics", {

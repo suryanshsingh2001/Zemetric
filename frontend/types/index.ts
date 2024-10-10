@@ -11,6 +11,7 @@ export interface UserProfile {
 export interface Stats {
   smsSentInLastMinute: number;
   totalSmsSentToday: number;
+  violations: number;
 }
 
 export interface Log {

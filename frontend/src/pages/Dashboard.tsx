@@ -10,11 +10,13 @@ import {
   Send,
   FileText,
   ExternalLink,
+  RefreshCcw,
 } from "lucide-react";
 
 import CONFIG from "../config";
 import Chart from "@/components/shared/Chart";
 import { UserProfile, Stats } from "types";
+import DashboardSkeletonLoader from "@/components/layout/DashboardLoader";
 
 const userProfile: UserProfile = {
   name: "John Doe",
@@ -26,12 +28,17 @@ export default function Dashboard() {
   const [stats, setStats] = useState<Stats>({
     smsSentInLastMinute: 0,
     totalSmsSentToday: 0,
+    violations: 0,
   });
 
-  const [violations, setViolations] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
 
   const fetchStats = async () => {
     try {
+      setLoading(true);
+
+
+
       const response = await axios.get(`${CONFIG.BASE_URL}stats/usage`, {
         params: { phoneNumber: userProfile.phoneNumber },
       });
@@ -40,29 +47,23 @@ export default function Dashboard() {
       setStats(data);
     } catch (error) {
       console.error("Error fetching stats:", error);
-    }
-  };
-
-  const fetchViolations = async () => {
-    try {
-      const response = await axios.get(`${CONFIG.BASE_URL}stats/violations`);
-      const data = response.data;
-      console.log(data, "data");
-      setViolations(data.violations.length);
-    } catch (error) {
-      console.error("Error fetching violations:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchStats();
-    fetchViolations();
   }, []);
+
+  
+  if(loading) {
+    return DashboardSkeletonLoader();
+  }
 
   return (
     <div className="">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome message */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold ">
             Welcome back, {userProfile.name}!
@@ -71,8 +72,6 @@ export default function Dashboard() {
             Here's an overview of your SMS dashboard
           </p>
         </div>
-
-        {/* Action buttons at the top */}
         <div className="flex justify-end gap-4 mb-6">
           <Button variant="secondary" asChild>
             <Link to="/logs">
@@ -132,7 +131,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <div className="text-2xl font-bold">{violations}</div>
+                <div className="text-2xl font-bold">{stats.violations}</div>
                 <p className="text-xs text-muted-foreground">
                   In the last hour
                 </p>
@@ -151,11 +150,16 @@ export default function Dashboard() {
           <Card className="transition-all duration-200 hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>SMS Usage Over Time</CardTitle>
-              <Button variant="secondary" size="sm" asChild>
-                <Link to="/logs">
-                  <FileText className="mr-2 h-4 w-4" />
-                  View All Logs
-                </Link>
+              <Button
+                variant="secondary"
+                asChild
+                className="gap-2"
+                onClick={fetchStats}
+              >
+                <div>
+                  <RefreshCcw className={`h-4 w-4`} />
+                  Refresh
+                </div>
               </Button>
             </CardHeader>
             <CardContent className="">

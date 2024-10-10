@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SendSMS from "./pages/SendSMS";
 import Dashboard from "./pages/Dashboard";
 import ViolationPage from "./pages/Violations";
-import { LogsPage } from "./pages/Logs";
+import LogsPage from "./pages/Logs";
 
 const App = () => {
   return (
